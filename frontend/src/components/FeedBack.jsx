@@ -1,7 +1,7 @@
 function FeedBack(){
     return(
         <div>
-            <h1>Feedback Component</h1>
+            <h1>Feedback </h1>
         </div>
     )
 }
