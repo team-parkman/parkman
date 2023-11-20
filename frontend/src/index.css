@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper-pagination {
+    bottom: 10px !important;
+}
+.swiper-pagination-bullet {
+    @apply bg-accent w-3 h-3 
+}
+.swiper-pagination-bullet-active {
+    @apply bg-accent w-3 h-3 
+}
