@@ -8,11 +8,14 @@ import Contact from "./components/Contact";
 import FeedBack from "./components/FeedBack";
 import Footer from "./components/Footer";
 
+import PopularLots from "./components/PopularLots";
+
 function App() {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen bg-background">
       <NavBar />
       <Hero />
+      <PopularLots/>
       <Popular />
       <About />
       <Services />
