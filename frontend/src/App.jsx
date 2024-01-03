@@ -1,28 +1,27 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
-import Hero from "./components/Hero";
-import Popular from "./components/Popular";
-import About from "./components/About";
-import Services from "./components/Services";
-import MissionAndVision from "./components/MissionAndVision";
-import Contact from "./components/Contact";
-import FeedBack from "./components/FeedBack";
-import Footer from "./components/Footer";
+import About from "./pages/About";
+import ScrollToTop from "./ScrolToTop";
+import Services from "./pages/Services";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 
-import PopularLots from "./components/PopularLots";
 
 function App() {
   return (
-    <div className="w-screen h-screen bg-background">
+    <div className="overflow-x-hidden h-full bg-background">
+      <ScrollToTop/>
       <NavBar />
-      <Hero />
-      <PopularLots/>
-      <Popular />
-      <About />
-      <Services />
-      <MissionAndVision />
-      <Contact />
-      <FeedBack />
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/services" element={<Services/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/*" element={<NotFound/>}/>
+      </Routes>
     </div>
   );
 }
