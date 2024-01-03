@@ -15,6 +15,18 @@ export default {
         primary: '#002795',
         secondary: '#fcfcfc',
         accent: '#8bf708',
+      },
+      backgroundImage: {
+        bgA: "url('../src/assets/bgA.png')"
+      },
+      boxShadow: {
+        shadow1: `3px 3px 10px rgba(0,0,0,1),
+        -1px -1px 6px rgba(255, 255, 255, 0.4);`,
+        shadow2: `3px 3px 10px rgba(0,0,0,1),
+        -1px -1px 6px rgba(255, 255, 255, 0.4),
+        inset 3px 3px 10px rgba(0,0,0,1),
+        inset -1px -1px 6px rgba(255, 255, 255, 0.4);`,
+       
       }
     },
   },
