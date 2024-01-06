@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 //initialize db connection
 dbConnection();
 
-//parse request body
+//parse request body for accepting form data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

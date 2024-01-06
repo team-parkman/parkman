@@ -9,7 +9,7 @@ const dbConnection = async () => {
       success({ message: "Database Connected", badge: true });
     })
     .catch(() => {
-      error({ message: "Connect to database failed", badge: true });
+      error({ message: "Connection to database failed", badge: true });
     });
 };
 
