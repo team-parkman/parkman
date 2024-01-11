@@ -14,9 +14,6 @@ const UserSchema = schema({
         type: String,
         require: true
     },
-    confirmPassword:{
-        type: String
-    },
     userType:{
         type: String,
         require: true

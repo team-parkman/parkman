@@ -4,6 +4,8 @@ const cors = require("cors");
 const { success, error } = require("consola");
 const dbConnection = require("./config/db");
 
+const user = require("./api/user");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -17,9 +19,7 @@ app.use(bodyParser.json());
 // set CORS for all hearders
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Welcome");
-});
+app.use("/api", user);
 
 app.listen(PORT, () => {
   if (!PORT) {

@@ -4,7 +4,7 @@ const { success, error } = require("consola");
 require("dotenv").config();
 const dbConnection = async () => {
   await mongoose
-    .connect(process.env.LOCALHOST_URI)
+    .connect(process.env.MONGODB_URI)
     .then(() => {
       success({ message: "Database Connected", badge: true });
     })
