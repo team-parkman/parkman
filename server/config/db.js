@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { success, error } = require("consola");
+const { success, error } = require("consola"); 
 
 require("dotenv").config();
 const dbConnection = async () => {
