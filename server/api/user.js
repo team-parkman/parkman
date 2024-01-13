@@ -6,18 +6,22 @@ const User = require("../models/user.model");
 
 router.post("/signup", (req, res) => {
   //Accept inputs from request body
-  let { username, email, password, userType } = req.body;
+  let { username, email, phoneNumber, userType, businessName, businessType, businessAddress, password } = req.body;
 
   //Trim of any white space
   username = username.trim();
   email = email.trim();
-  password = password.trim();
+  phoneNumber = phoneNumber.trim();
   userType = userType.trim();
+  businessName = businessName.trim();
+  businessType = businessType.trim();
+  businessAddress = businessAddress.trim();
+  password = password.trim();
 
   let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 
   //check if any required field is empty
-  if (username == "" || email == "" || password == "" || userType == "") {
+  if (username == "" || email == "" || phoneNumber == "" || password == "" || userType == "") {
     return res.json({
       status: "FAILED",
       message: "Empty input field"
@@ -52,8 +56,13 @@ router.post("/signup", (req, res) => {
               const newUser = new User({
                 username,
                 email,
-                password: hashedPassword,
-                userType
+                phoneNumber,
+                userType,
+                businessName,
+                businessType,
+                businessAddress,
+                password: hashedPassword
+
                 //verified: false,
               });
 
@@ -82,6 +91,7 @@ router.post("/signup", (req, res) => {
   }
 });
 
+//USER LoGIN 
 router.post("/signin", (req, res) => {
   //accept in requst request body
   let { email, password } = req.body;
@@ -122,11 +132,11 @@ router.post("/signin", (req, res) => {
               message: error.message || "An error occurred"
             });
           });
-      }else{
-            return res.status(500).send({
-              statusText: "FAILED",
-              message: "Invalid email address"
-            });
+      } else {
+        return res.status(500).send({
+          statusText: "FAILED",
+          message: "Invalid email address"
+        });
       }
     });
   }
