@@ -30,6 +30,10 @@ const UserSchema = schema({
   password: {
     type: String,
     require: true
+  },
+  verified: {
+    type: Boolean,
+    require: true
   }
 });
 
