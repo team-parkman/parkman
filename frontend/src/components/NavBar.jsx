@@ -14,10 +14,10 @@ function NavBar() {
     <div className="bg-[#010014] fixed top-0 w-full z-50 ">
       <div className=" flex justify-between items-center px-4 max-w-7xl mx-auto">
         <div className="font-bold text-2xl flex gap-2 items-center py-2 md-py-0">
-          <FaCar className="text-5xl text-accent"/>
+          <FaCar className="text-5xl text-accent" />
           <span className=" text-[#ffffff] text-sm md:text-2xl">SafeBay</span>
         </div>
-        
+
         <div>
           <div className="hidden text-textColor lg:flex justify-center items-center gap-4 text-[14px] pl-4">
             <NavLink
@@ -51,17 +51,55 @@ function NavBar() {
             >
               <span className="-skew-x-12 ">Services</span>
             </NavLink>
-           
-            <NavLink
-              to="/find-lot"
-              className={({ isActive }) =>
-                isActive
-                  ? "hover:bg-accent text-primary bg-accent grid place-content-center skew-x-12  duration-150 h-[70px] px-6"
-                  : "px-6 hover:text-accent"
-              }
+
+            <button
+              id="dropdownDefaultButton"
+              data-dropdown-toggle="dropdown1"
+              className=" text-center inline-flex items-center"
+              type="button"
             >
-              <span className="-skew-x-12 ">Find Lot</span>
-            </NavLink>
+              Find Spot{" "}
+              <svg
+                className="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="dropdown1"
+              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+              <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                <li>
+                  <Link
+                    to="/car_park"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Car Park
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/car_wash"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Car Wash
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             <NavLink
               to="/contact"
               className={({ isActive }) =>
@@ -92,8 +130,6 @@ function NavBar() {
               </svg>
             </Link>
           </div>
-
-
 
           {/* mobile */}
           <MdMenu className="text-3xl text-textColor lg:hidden" onClick={handleMenu} />
@@ -135,15 +171,52 @@ function NavBar() {
               <span className=" ">Services</span>
             </NavLink>
 
-            <NavLink
-              to="/find-lot"
-              onClick={handleMenu}
-              className={({ isActive }) =>
-                isActive ? "hover:bg-primary bg-accent text-primary grid  duration-150 py-4 w-full px-6" : "px-6"
-              }
+            <button
+              id="dropdownDefaultButton"
+              data-dropdown-toggle="dropdown"
+              className=" text-center inline-flex items-center px-6"
+              type="button"
+              data-dropdown-placement="bottom"
             >
-              <span className=" ">Find Lot</span>
-            </NavLink>
+              Find Spot    <svg
+                className="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <div
+              id="dropdown"
+              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700"
+            >
+              <ul className="py-2 text-sm text-background font-semibold dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                <li>
+                  <Link
+                    to="/car_park"
+                    className="block px-4 py-2 hover:bg-accent dark:hover:text-white"
+                  >
+                    Car Park
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/car_wash"
+                    className="block px-4 py-2 hover:bg-accent dark:hover:text-white"
+                  >
+                    Car Wash
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
             <NavLink
               to="/contact"
@@ -186,7 +259,6 @@ function NavBar() {
               </svg>
             </Link>
           </div>
-          
         </div>
       </div>
     </div>

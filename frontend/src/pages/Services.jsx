@@ -54,7 +54,7 @@ const Services = () => {
           </div>
 
           <div className="md:flex flex-row-reverse justify-between gap-4 md:gap-10 mt-20">
-            <div  className="w-full">
+            <div className="w-full">
               <h2 className="text-accent text-3xl">The Car wash system</h2>
               <p className="text-textColor text-lg  pt-2 pb-6">
                 Find the closest car wash facilities to keep your vehicle looking its best. Sort options by user ratings
@@ -91,47 +91,51 @@ const Services = () => {
         </div>
 
         <div className="text-textColor mb-20">
-        <div className="w-full  flex flex-col items-center md:items-start mt-20 ">
-          <h1 className="flex items-center gap-2 text-2xl lg:text-4xl font-bold justify-center text-center md:text-left">
-            Good News For Lot Owners and Car Wash Operators
-          </h1>
-        </div>
-
-        <div className="mt-20 flex flex-col justify-center items-start gap-10 md:gap-6 md:flex-row">
-          <div className="text-center w-full flex flex-col justify-center items-center">
-            <FaGlobe className="text-5xl text-accent" />
-            <h3 className="text-xl font-bold pt-3">Boost Your Business Visibility:</h3>
-            <p className="pt-2 text-md ">
-              Join SafeBay to increase your company's exposure and connect with car owners actively seeking parking and
-              car wash services. Registering your lot or car wash is quick and easy, putting your business on the map
-              for potential customers.
-            </p>
+          <div className="w-full  flex flex-col items-center md:items-start mt-20 ">
+            <h1 className="flex items-center gap-2 text-2xl lg:text-4xl font-bold justify-center text-center md:text-left">
+              Good News For Lot Owners and Car Wash Operators
+            </h1>
           </div>
 
-          <div className="text-center w-full flex flex-col justify-center items-center">
-            <FaTachometerAlt className="text-5xl text-accent" />
-            <h3 className="text-xl font-bold pt-3">Flexible Management Tools:</h3>
-            <p className="pt-2 text-md ">
-              Take control of your listings with our user-friendly dashboard. Update availability, adjust pricing, and
-              showcase special promotions effortlessly. SafeBay empowers you to manage your business efficiently.
-            </p>
-          </div>
+          <div className="mt-20 flex flex-col justify-center items-start gap-10 md:gap-6 md:flex-row">
+            <div className="text-center w-full flex flex-col justify-center items-center">
+              <div className="bg-secondary w-[70px] h-[70px] rounded-NewRadius flex justify-center items-center">
+                <FaGlobe className="text-4xl text-primary" />
+              </div>
+              <h3 className="text-xl font-bold pt-3">Boost Your Business Visibility:</h3>
+              <p className="pt-2 text-md ">
+                Join SafeBay to increase your company's exposure and connect with car owners actively seeking parking
+                and car wash services. Registering your lot or car wash is quick and easy, putting your business on the
+                map for potential customers.
+              </p>
+            </div>
 
-          <div className="text-center w-full flex flex-col justify-center items-center">
-            <FaHandshake className="text-5xl text-accent"/>
-            <h3 className="text-xl font-bold pt-3">Build Trust with Reviews:</h3>
-            <p className="pt-2 text-md ">
-              Earn the trust of potential customers by showcasing positive reviews. Happy car owners can leave feedback,
-              helping you establish a solid reputation within the SafeBay community.
-            </p>
+            <div className="text-center w-full flex flex-col justify-center items-center">
+              <div className="bg-secondary w-[70px] h-[70px] rounded-NewRadius flex justify-center items-center">
+                <FaTachometerAlt className="text-4xl text-primary" />
+              </div>
+              <h3 className="text-xl font-bold pt-3">Flexible Management Tools:</h3>
+              <p className="pt-2 text-md ">
+                Take control of your listings with our user-friendly dashboard. Update availability, adjust pricing, and
+                showcase special promotions effortlessly. SafeBay empowers you to manage your business efficiently.
+              </p>
+            </div>
+
+            <div className="text-center w-full flex flex-col justify-center items-center">
+              <div className="bg-secondary w-[70px] h-[70px] rounded-NewRadius flex justify-center items-center">
+                <FaHandshake className="text-4xl text-primary" />
+              </div>
+              <h3 className="text-xl font-bold pt-3">Build Trust with Reviews:</h3>
+              <p className="pt-2 text-md ">
+                Earn the trust of potential customers by showcasing positive reviews. Happy car owners can leave
+                feedback, helping you establish a solid reputation within the SafeBay community.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-
-      </div>
-      <FeedBack/>
-      <Footer/>
+      <FeedBack />
+      <Footer />
     </div>
   );
 };

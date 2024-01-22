@@ -92,7 +92,36 @@ function About() {
               <div class="w-full h-full duration-200 flex justify-center items-center opacity-100 rounded-lg group-hover:h-[0px] group-hover:opacity-0 relative">
                 <img src={Noble} alt="" className="w-full  object-cover" />
                 <div className="flex flex-col justify-center px-4 absolute bg-pink-700 w-full bottom-0">
-                  <h2 className="font-bold pt-4 pb-1 text-xl text-textColor">Noble Chinonso</h2>
+                  <h2 className="font-bold pt-4 pb-1 text-xl text-textColor">Victor</h2>
+                  <p className="text-sm pb-4 font-semibold text-textColor">
+                    Mern Stack Developer <br /> React | Node | HTML | CSS | Javascript etc.
+                  </p>
+                </div>
+              </div>
+
+              <div class="h-0 w-full opacity-0 flex justify-center items-center flex-col gap-4 rounded-lg  duration-200 rotate-90 -scale-100 group-hover:h-full group-hover:opacity-100 group-hover:rotate-180 group-hover:text-md px-4">
+                <p>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor nihil voluptates inventore modi
+                  blanditiis? Repellat reprehenderit repudiandae aspernatur beatae corrupti odit dolor, saepe
+                  exercitationem dolorem corporis ut ex fugit fugiat.
+                </p>
+                <div className="flex justify-center items-center flex-col gap-6">
+                  <p className="text-background text-sm font-semibold">
+                    Email Address: <span className="text-background">nobleugwuja@gmail.com</span>{" "}
+                  </p>
+                  <span className="flex gap-4 ">
+                    <FaFacebook />
+                    <FaInstagram />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-[350px] md:w-[250px]  duration-200 ease-in-out rounded-lg shadow-xl mt-8 hover:rounded-2xl hover:cursor-pointer hover:scale-100 hover:bg-secondary group overflow-hidden">
+              <div class="w-full h-full duration-200 flex justify-center items-center opacity-100 rounded-lg group-hover:h-[0px] group-hover:opacity-0 relative">
+                <img src={Noble} alt="" className="w-full  object-cover" />
+                <div className="flex flex-col justify-center px-4 absolute bg-blue-700 w-full bottom-0">
+                  <h2 className="font-bold pt-4 pb-1 text-xl text-textColor">James</h2>
                   <p className="text-sm pb-4 font-semibold text-textColor">
                     Mern Stack Developer <br /> React | Node | HTML | CSS | Javascript etc.
                   </p>

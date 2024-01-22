@@ -51,7 +51,7 @@ const Login = () => {
               <div className="w-full">
               <p className=" text-textColor">Don't have an account?</p>
                 <Link to="/login" className="text-accent underline py-2 w-full rounded-lg text-lg font-semibold">
-                  Login
+                  Register
                 </Link>
               </div>
               <div className="w-full font-semibold flex justify-end text-accent">

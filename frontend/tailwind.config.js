@@ -27,6 +27,9 @@ export default {
         inset 3px 3px 10px rgba(0,0,0,1),
         inset -1px -1px 6px rgba(255, 255, 255, 0.4);`,
        
+      },
+      borderRadius: {
+        NewRadius: `71% 29% 57% 43% / 31% 44% 56% 69% `
       }
     },
   },
