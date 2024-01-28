@@ -6,10 +6,10 @@ const dbConnection = async () => {
   await mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
-      success({ message: "Database Connected", badge: true });
+      success({ message: "Database Connected", badge: true }); 
     })
     .catch(() => {
-      error({ message: "Connection to database failed", badge: true });
+      error({ message: "Connection to database failed", badge: true }); 
     });
 };
 
