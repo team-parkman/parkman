@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 
 const User = require("../models/user.model");
-const VerifyUser = require("../models/verifyUser.model");
+const UserVerification = require("../models/verifyUser.model");
 
 require("dotenv").config();
 
@@ -26,39 +26,39 @@ let transporter = nodemailer.createTransport({
 });
 
 //test transport
-transporter.verify((error, success) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Ready to use");
-    console.log(success);
-  }
-});
+// transporter.verify((error, success) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("Ready to use");
+//     console.log(success);
+//   }
+// });
 
 //send verification email
 const SendVerificationEmail = ({ _id, email }, res) => {
   const currentUrl = "http://localhost:5000";
-  const uniqueString = uuidv4 + _id;
+  const uniqueString = uuidv4() + _id;
 
-  //mail options
+  console.log("uniqueString", uniqueString);
+
   const mailOptions = {
     from: process.env.EMAIL,
     to: email,
     subject: "Verify your email",
     html: `<p>Verify your email to complete your sign up and log into your account </p>
-          <p>This link <b>expires in 6 hours</b> </P> 
-          <p><a href= ${currentUrl + "/user/verify/" + _id + "/" + uniqueString} >Verify here</a>
+          <p>This link <b>expires in 6 hours</b>. </P> 
+          <p><a href= ${currentUrl + "/user/verified/" + _id + "/" + uniqueString} >Verify here</a>
           to proceed</p>  
     `
   };
 
-  //hash the unique string
   const saltRounds = 10;
   bcrypt
     .hash(uniqueString, saltRounds)
     .then((hashedUniqueString) => {
-      //set values in user verification function
-      const verifyUser = new VerifyUser({
+      //console.log("hashedUniqueString", hashedUniqueString);
+      const verifyUser = new UserVerification({
         userId: _id,
         uniqueString: hashedUniqueString,
         createdAt: Date.now(),
@@ -67,7 +67,8 @@ const SendVerificationEmail = ({ _id, email }, res) => {
 
       verifyUser
         .save()
-        .then(() => {
+        .then((response) => {
+          
           transporter
             .sendMail(mailOptions)
             .then(() => {
@@ -100,10 +101,9 @@ const SendVerificationEmail = ({ _id, email }, res) => {
 };
 
 router.post("/signup", (req, res) => {
-  //Accept inputs from request body
   let { username, email, phoneNumber, userType, businessName, businessType, businessAddress, password } = req.body;
 
-  //Trim of any white space
+  //Trim any white space in user input
   username = username.trim();
   email = email.trim();
   phoneNumber = phoneNumber.trim();
@@ -113,7 +113,6 @@ router.post("/signup", (req, res) => {
   businessAddress = businessAddress.trim();
   password = password.trim();
 
-  // let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
   let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   //check if any required field is empty
@@ -163,7 +162,6 @@ router.post("/signup", (req, res) => {
 
               //create new user
               newUser.save().then((result) => {
-                //Send a verification email
                 SendVerificationEmail(result, res);
                 // return res.json({
                 //   statusText: "User successfully saved",
@@ -189,11 +187,13 @@ router.post("/signup", (req, res) => {
 });
 
 //verify email route
-router.get("/verify/:userId/:uniqueString", (req, res) => {
+router.get("/user/verified/:userId/:uniqueString", (req, res) => {
   let { userId, uniqueString } = req.params;
+  console.log("userId", userId);
+  console.log("uniqueString", uniqueString);
 
   //check if user verification record exist
-  VerifyUser.findOne({ userId })
+  UserVerification.findOne({ userId })
     .then((result) => {
       if (result.length > 0) {
         //check if the link has expires or is still valid
@@ -202,7 +202,7 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
 
         if (expiresAt < Date.now()) {
           //delete user verification link if expired
-          VerifyUser.deleteOne({ userId })
+          UserVerification.deleteOne({ userId })
             .then((result) => {
               User.deleteOne({ _id: userId })
                 .then(() => {
@@ -228,7 +228,7 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
                 // string matched then update the user record and change the value of verified to TRUE
                 User.updateOne({ _id: userId }, { verified: true })
                   .then(() => {
-                    VerifyUser.deleteOne({ userId })
+                    UserVerification.deleteOne({ userId })
                       .then(() => {
                         res.sendFile(path.join(__dirname, "../../views/verfied.html"));
                       })
