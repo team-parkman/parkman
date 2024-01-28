@@ -23,12 +23,9 @@ All tests should be written in the `__tests__' folder. There's a sample in there
 ### James Okolie
 -----
 
-### Noah Osuolale
-------
-
 ### Victor Yohanna
 A tech enthusiast, looking for opportunities to expose myself to different aspects of learning and creativity, absolutely focused on achieving goals and easily adaptable to new environments.
-Working as a full-stack software developer with over 6 years hands-on experience, with exceptional ability to use different tech stack.
+Working as a full-stack software developer with over 6 years of hands-on experience, with exceptional ability to use different tech stack.
 
 Email: victoryohanna@gmail.com
 
