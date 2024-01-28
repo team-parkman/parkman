@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const VerifyUserSchema = schema({
+const VerifyUserSchema = new Schema({
   userId: {
     type: String
   },
@@ -16,5 +16,5 @@ const VerifyUserSchema = schema({
   }
 });
 
-const VerifyUser = mongoose.model("verifyuser", VerifyUserSchema);
-module.exports = VerifyUser;
+const UserVerification = mongoose.model("verifyuser", VerifyUserSchema);
+module.exports = UserVerification;
