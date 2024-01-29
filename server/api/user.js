@@ -1,104 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
-const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
+const path = require("path");
 
 const User = require("../models/user.model");
 const UserVerification = require("../models/verifyUser.model");
-
-require("dotenv").config();
-
-//create a transportter
-let transporter = nodemailer.createTransport({
-  service: "gmail",
-  port: 5000,
-  secure: true,
-  logger: true,
-  secureConnection: false,
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASS
-  },
-  tls: {
-    rejectUnAuthorize: true
-  }
-});
-
-//test transport
-// transporter.verify((error, success) => {
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log("Ready to use");
-//     console.log(success);
-//   }
-// });
-
-//send verification email
-const SendVerificationEmail = ({ _id, email }, res) => {
-  const currentUrl = "http://localhost:5000";
-  const uniqueString = uuidv4() + _id;
-
-  console.log("uniqueString", uniqueString);
-
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: email,
-    subject: "Verify your email",
-    html: `<p>Verify your email to complete your sign up and log into your account </p>
-          <p>This link <b>expires in 6 hours</b>. </P> 
-          <p><a href= ${currentUrl + "/user/verified/" + _id + "/" + uniqueString} >Verify here</a>
-          to proceed</p>  
-    `
-  };
-
-  const saltRounds = 10;
-  bcrypt
-    .hash(uniqueString, saltRounds)
-    .then((hashedUniqueString) => {
-      //console.log("hashedUniqueString", hashedUniqueString);
-      const verifyUser = new UserVerification({
-        userId: _id,
-        uniqueString: hashedUniqueString,
-        createdAt: Date.now(),
-        expiresAt: Date.now() + 21600000
-      });
-
-      verifyUser
-        .save()
-        .then((response) => {
-          
-          transporter
-            .sendMail(mailOptions)
-            .then(() => {
-              return res.status(200).send({
-                // email sent and verification record saved
-                statusText: "PENDING",
-                message: "Verification email sent"
-              });
-            })
-            .catch((error) => {
-              return res.status(500).send({
-                statusText: "FAILD",
-                message: error.message || "Email not send"
-              });
-            });
-        })
-        .catch((error) => {
-          return res.status(500).send({
-            statusText: "FAILED",
-            message: error.message || "Verification failed"
-          });
-        });
-    })
-    .catch((error) => {
-      return res.status(500).send({
-        statusText: "FAILED",
-        message: error.message || "An error occured"
-      });
-    });
-};
+const SendVerificationEmail = require("../utils/emailVerification");
 
 router.post("/signup", (req, res) => {
   let { username, email, phoneNumber, userType, businessName, businessType, businessAddress, password } = req.body;
@@ -149,6 +56,7 @@ router.post("/signup", (req, res) => {
             .hash(password, saltRounds)
             .then((hashedPassword) => {
               const newUser = new User({
+                userId: "",
                 username,
                 email,
                 phoneNumber,
@@ -160,13 +68,9 @@ router.post("/signup", (req, res) => {
                 verified: false
               });
 
-              //create new user
               newUser.save().then((result) => {
+                // handle send email verification link
                 SendVerificationEmail(result, res);
-                // return res.json({
-                //   statusText: "User successfully saved",
-                //   data: result
-                // });
               });
             })
             .catch((error) => {
@@ -187,78 +91,47 @@ router.post("/signup", (req, res) => {
 });
 
 //verify email route
-router.get("/user/verified/:userId/:uniqueString", (req, res) => {
-  let { userId, uniqueString } = req.params;
-  console.log("userId", userId);
-  console.log("uniqueString", uniqueString);
+router.get("/verify/:userId/:uniqueString", (req, res) => {
+  let { userId } = req.params;
 
   //check if user verification record exist
   UserVerification.findOne({ userId })
     .then((result) => {
-      if (result.length > 0) {
-        //check if the link has expires or is still valid
-        const { expiresAt } = result;
-        const hashedUniqueString = result.uniqueString;
-
-        if (expiresAt < Date.now()) {
-          //delete user verification link if expired
-          UserVerification.deleteOne({ userId })
-            .then((result) => {
-              User.deleteOne({ _id: userId })
-                .then(() => {
-                  let message = "link expired. Please sign up";
-                  res.redirect(`/user/verified/error=true&message=${message}`);
-                })
-                .catch((error) => {
-                  let message = "An error occured while clearing user verification record";
-                  res.redirect(`/user/verified/error=true&message=${message}`);
-                });
-            })
-            .catch((error) => {
-              //
-              let message = "An error occured while clearing expired user verification record";
-              res.redirect(`/user/verified/error=true&message=${message}`);
-            });
-        } else {
-          // if link not expired, compare the hashUniqueString with uniqueString from the record
-          bcrypt
-            .compare(uniqueString, hashedUniqueString)
-            .then((result) => {
-              if (result) {
-                // string matched then update the user record and change the value of verified to TRUE
-                User.updateOne({ _id: userId }, { verified: true })
-                  .then(() => {
-                    UserVerification.deleteOne({ userId })
-                      .then(() => {
-                        res.sendFile(path.join(__dirname, "../../views/verfied.html"));
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                        let message = "An error occured while deleting verified user  record";
-                        res.redirect(`/user/verified/error=true&message=${message}`);
-                      });
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                    let message = "An error occured while updating record";
-                    res.redirect(`/user/verified/error=true&message=${message}`);
-                  });
-              } else {
-                //string not match
-                let message = "Invalid verification string.";
+      if (result.expiresAt < Date.now()) {
+        //delete user verification link if expired
+        UserVerification.findOneAndDelete({ userId })
+          .then((result) => {
+            User.findOneAndDelete({ userId })
+              .then(() => {
+                let message = "link expired. Please sign up";
                 res.redirect(`/user/verified/error=true&message=${message}`);
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              let message = "An error occured while comparing uniqueString";
-              res.redirect(`/user/verified/error=true&message=${message}`);
-            });
-        }
+              })
+              .catch((error) => {
+                let message = "An error occured while clearing user verification record";
+                res.redirect(`/user/verified/error=true&message=${message}`);
+              });
+          })
+          .catch((error) => {
+            let message = "An error occured while clearing expired user verification record";
+            res.redirect(`/user/verified/error=true&message=${message}`);
+          });
       } else {
-        //user verification record not existing
-        let message = "user verification record not found or has been verified. Please sign up or login";
-        res.redirect(`/user/verified/error=true&message=${message}`);
+        //change user verified status to true
+        User.findOneAndUpdate({ userId }, { verified: true })
+          .then(() => {
+            UserVerification.findOneAndDelete({ userId })
+              .then(() => {
+                res.sendFile(path.join(__dirname, "./../views/verified.html"));
+              })
+              .catch((error) => {
+                let message = "An error occured while deleting verified user  record";
+                res.redirect(`/user/verified/error=true&message=${message}`);
+              });
+          })
+          .catch((error) => {
+            let message = "An error occured while updating record";
+            res.redirect(`/user/verified/error=true&message=${message}`);
+          });
       }
     })
     .catch((error) => {
@@ -275,7 +148,7 @@ router.get("/verified", (req, res) => {
 
 //USER LoGIN
 router.post("/signin", (req, res) => {
-  //accept in requst request body
+
   let { email, password } = req.body;
 
   //trim white space
