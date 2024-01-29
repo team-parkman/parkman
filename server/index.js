@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // set CORS for all hearders
 app.use(cors());
 
-app.use("/api", user);
+app.use("/user", user);
 
 app.listen(PORT, () => {
   if (!PORT) {
