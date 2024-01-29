@@ -5,6 +5,9 @@ const VerifyUserSchema = new Schema({
   userId: {
     type: String
   },
+  // email: {
+  //   type: String
+  // },
   uniqueString: {
     type: String
   },
