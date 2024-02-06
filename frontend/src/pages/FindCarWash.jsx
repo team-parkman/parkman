@@ -78,10 +78,10 @@ const FindCarWash = () => {
       <div className="max-w-[80rem] mx-auto px-6">
         <div className="w-full md:py-10 py-5  flex flex-col justify-center items-center">
           <h1 className="flex items-center gap-2 text-3xl md:text-5xl font-bold justify-center text-textColor">
-            Find The Nearest Car Park <FaArrowRight className="text-accent text-xl md:text-3xl font-bold" />
+            Find The Nearest Car Wash <FaArrowRight className="text-accent text-xl md:text-3xl font-bold" />
           </h1>
-          <p className="text-accent text-lg py-2 ">
-            Finding the nearest lot within your location have never been easy.
+          <p className="text-gray-300 text-lg py-2 ">
+            Finding the nearest car wash within your location have never been easy.
           </p>
         </div>
 

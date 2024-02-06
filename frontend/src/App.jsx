@@ -12,6 +12,8 @@ import FindCarWash from "./pages/FindCarWash";
 import Contact from "./pages/Contact";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
+import { BusinessCarwash, BusinessHistory, BusinessHome, BusinessUsers, CarLot } from "./pages/Dashboard/BusinessDashboard/pages";
+import { BusinessRoot } from "./pages/Dashboard/BusinessDashboard/BusinessRoot";
 
 function App() {
   useEffect(() => {
@@ -32,6 +34,14 @@ function App() {
         <Route path="/*" element={<NotFound />} />
         <Route path="/car_park" element={<FindLot />} />
         <Route path="/car_wash" element={<FindCarWash />} />
+
+        <Route element={<BusinessRoot/>}>
+          <Route path="/business-dashboard" element={<BusinessHome />} />
+          <Route path="/business-carlot" element={<CarLot/>}/>
+          <Route path="/business-carwash" element={<BusinessCarwash/>}/>
+          <Route path="/business-users" element={<BusinessUsers/>}/>
+          <Route path="/business-history" element={<BusinessHistory/>}/>
+        </Route>
       </Routes>
     </div>
   );
