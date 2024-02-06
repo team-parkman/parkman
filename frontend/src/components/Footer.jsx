@@ -1,3 +1,4 @@
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -23,11 +24,10 @@ function Footer() {
       <div>
         <div className="pt-10 flex flex-col md:flex-row md:gap-20 gap-12 max-w-7xl mx-auto pb-20 px-6">
           <div className="text-background max-w-[400px] w-full">
-            <h4 className="text-lg font-bold pb-6 text-textColor">About Us</h4>
-            <p className="text-gray-300">
-              SafeBay was born out of a simple idea: to provide people with a better way to find parking and car wash
-              services. We understood the frustrations of endlessly searching for a parking spot and the desire for a
-              clean and sparkling car.
+            <h4 className="text-lg font-bold pb-6 text-textColor">Contact Us</h4>
+            <p className="text-gray-300 flex gap-4">
+              <FaFacebook className="text-2xl"/>
+              <FaInstagram className="text-2xl"/>
             </p>
           </div>
           <div className="text-background max-w-[400px] w-full">

@@ -91,7 +91,8 @@ function Services() {
         </div>
 
         <div className="mt-20 flex flex-col justify-center items-start gap-10 md:gap-6 md:flex-row">
-          <div className="text-center w-full flex flex-col justify-center items-center">
+
+          <div className="text-center w-full flex flex-col justify-center items-center bg-[#020020] p-6 rounded-xl">
             <FaGlobe className="text-5xl text-accent" />
             <h3 className="text-xl font-bold pt-3">Boost Your Business Visibility:</h3>
             <p className="pt-2 text-md ">
@@ -101,7 +102,7 @@ function Services() {
             </p>
           </div>
 
-          <div className="text-center w-full flex flex-col justify-center items-center">
+          <div className="text-center w-full flex flex-col justify-center items-center bg-[#020020] p-6 rounded-xl">
             <FaTachometerAlt className="text-5xl text-accent" />
             <h3 className="text-xl font-bold pt-3">Flexible Management Tools:</h3>
             <p className="pt-2 text-md ">
@@ -110,7 +111,7 @@ function Services() {
             </p>
           </div>
 
-          <div className="text-center w-full flex flex-col justify-center items-center">
+          <div className="text-center w-full flex flex-col justify-center items-center bg-[#020020] p-6 rounded-xl">
             <FaHandshake className="text-5xl text-accent"/>
             <h3 className="text-xl font-bold pt-3">Build Trust with Reviews:</h3>
             <p className="pt-2 text-md ">
