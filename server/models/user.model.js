@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
+
 const UserSchema = schema({
   userId:{
     type: String
@@ -17,19 +18,6 @@ const UserSchema = schema({
     type: String,
     require: true
   },
-  userType: {
-    type: String,
-    require: true
-  },
-  businessName: {
-    type: String
-  },
-  businessType: {
-    type: String
-  },
-  businessAddress: {
-    type: String
-  },
   password: {
     type: String,
     require: true
@@ -37,7 +25,7 @@ const UserSchema = schema({
   verified: {
     type: Boolean,
     require: true
-  }
+  },
 });
 
 const User = mongoose.model("user", UserSchema);

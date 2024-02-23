@@ -8,22 +8,18 @@ const UserVerification = require("../models/verifyUser.model");
 const SendVerificationEmail = require("../utils/emailVerification");
 
 router.post("/signup", (req, res) => {
-  let { username, email, phoneNumber, userType, businessName, businessType, businessAddress, password } = req.body;
+  let { username, email, phoneNumber, password } = req.body;
 
   //Trim any white space in user input
   username = username.trim();
   email = email.trim();
   phoneNumber = phoneNumber.trim();
-  userType = userType.trim();
-  businessName = businessName.trim();
-  businessType = businessType.trim();
-  businessAddress = businessAddress.trim();
   password = password.trim();
 
   let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   //check if any required field is empty
-  if (username == "" || email == "" || phoneNumber == "" || password == "" || userType == "") {
+  if (username == "" || email == "" || phoneNumber == "" || password == "") {
     return res.json({
       status: "FAILED",
       message: "Empty input field"
@@ -60,10 +56,6 @@ router.post("/signup", (req, res) => {
                 username,
                 email,
                 phoneNumber,
-                userType,
-                businessName,
-                businessType,
-                businessAddress,
                 password: hashedPassword,
                 verified: false
               });
@@ -175,6 +167,7 @@ router.post("/signin", (req, res) => {
             .compare(password, hashedPassword)
             .then((result) => {
               if (result) {
+                data.password = undefined;
                 return res.status(200).send({
                   statusText: "SUCCESS",
                   message: "Signin successfully",

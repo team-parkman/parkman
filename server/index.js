@@ -5,6 +5,7 @@ const { success, error } = require("consola");
 const dbConnection = require("./config/db");
 
 const user = require("./api/user");
+const business = require("./api/business");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/user", user);
+app.use("/business", business);
 
 app.listen(PORT, () => {
   if (!PORT) {
