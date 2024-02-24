@@ -22,6 +22,10 @@ const UserSchema = schema({
     type: String,
     require: true
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   verified: {
     type: Boolean,
     require: true

@@ -13,7 +13,8 @@ const TransactionsSchema = schema({
     type: String
   },
   date: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   amount: {
     type: Number
@@ -54,6 +55,10 @@ const BusinessDataSchema = schema({
   price: {
     type: Number,
     require: true
+  },
+  createdAt: {
+    type:Date,
+    default:Date.now
   },
   ratings: [Number],
   transactions:[TransactionsSchema],
