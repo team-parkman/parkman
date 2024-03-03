@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
+mongoose.SchemaTypes.String.cast(false);
 
 const UserSchema = schema({
   userId:{

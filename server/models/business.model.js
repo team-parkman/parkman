@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
+//Disable mongoose automatic type casting before save
+mongoose.SchemaTypes.Number.cast(false)
+mongoose.SchemaTypes.String.cast(false);
+
 const CoordinateSchema = schema({
   latitude: Number,
   longitude: Number,
@@ -60,13 +64,20 @@ const BusinessDataSchema = schema({
     type:Date,
     default:Date.now
   },
-  ratings: [Number],
+  ratings: {
+    type: [{
+      type: Number,
+      min: [1, "Must be at least 1, got {VALUE}"],
+      max: [5, "Must be at most 5, got {VALUE}"]
+    }]
+  },
   transactions:[TransactionsSchema],
-})
+}, )
 
 const BusinessSchema = schema({
   ownerId: {
-    type: String,
+    type: schema.Types.ObjectId,
+    ref: "User",
     require: true
   },
   businesses : [BusinessDataSchema]
