@@ -25,8 +25,9 @@ const TransactionsSchema = schema({
   },
   status: {
     type: String
-  },   
-}, { _id: false })
+  }
+
+})
 
 const BusinessDataSchema = schema({
   businessName: {

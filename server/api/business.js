@@ -102,8 +102,45 @@ router.get("/:businessId", async (req, res) => {
 /*****
 * GET AVERAGE RATING OF A BUSINESS
  ****/
+router.get("/rating/:businessId", async (req, res) => {
 
+  try {
+    let { businessId } = req.params;
+    businessId = new mongoose.Types.ObjectId(businessId);
 
+    const result = await Business.aggregate([
+      { $unwind: "$businesses" }, 
+      { $match: { "businesses._id": businessId } }, 
+      { $unwind: "$businesses.ratings" }, 
+      {
+        $group: {
+          _id: null,
+          averageRating: { $avg: "$businesses.ratings" } // Calculate the average rating
+        }
+      }
+    ]);
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({
+        status: "FAILED",
+        message: "Document not found"
+      });
+    }
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: "Document found",
+      data: result[0] //A single document based on businessId
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      status: "FAILED",
+      message: "Internal server error",
+      error: error.message
+    });
+  }
+
+});
 
 
 /*****
@@ -164,7 +201,7 @@ router.post("/", async (req, res) => {
       updatedBusiness = await Business.findOneAndUpdate(
         { ownerId },
         { $push: { businesses: businessData } },
-        { new: true, safe: true, runValidators: true, select: '-_id' }
+        { new: true, runValidators: true, select: '-_id' }
       );
     } else {
       const newBusiness = new Business({
@@ -188,6 +225,53 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+
+/*****
+* SAVE TRANSACTIONS
+ ****/
+router.patch("/transact/:businessId", async (req, res) => {
+  try {
+    let { businessId } = req.params;
+    businessId = new mongoose.Types.ObjectId(businessId);
+    const { customerName, amount, status } = req.body;
+
+    if (!customerName || !amount || !status){
+      return res.status(400).json({
+        status: "FAILED",
+        message: "Empty field"
+      });
+    }
+
+    const transactionData = {
+      customerName,
+      amount,
+      status
+    }
+
+    const updatedBusiness = await Business.findOneAndUpdate(
+      { "businesses": { $elemMatch: { "_id": businessId } } },
+      { $push: { "businesses.$.transactions": transactionData } },
+      { new: true, runValidators: true }
+    );
+
+    const updatedBusinessObj = updatedBusiness.businesses.find(business => business._id.toString() === businessId.toString());
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: "Transacton added successfully",
+      data: updatedBusinessObj
+    })
+
+  }catch(error){
+    return res.status(500).json({
+      status: "FAILED",
+      message: "Internal server error",
+      error: error.message
+    });
+  }
+  
+})
 
 
 /*****
@@ -241,7 +325,7 @@ router.patch("/:businessId", async (req, res) => {
       const updatedResult = await Business.findOneAndUpdate(
         { 'businesses._id': businessId },
         { $pull: { businesses: { _id: businessId }}},
-        { new: true, safe: true }
+        { new: true }
       );
 
       return res.status(200).json({
