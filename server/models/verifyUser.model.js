@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+mongoose.SchemaTypes.String.cast(false);
+
 const VerifyUserSchema = new Schema({
   userId: {
     type: String

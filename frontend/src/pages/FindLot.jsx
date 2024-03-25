@@ -26,6 +26,16 @@ const parkingLots = [
     rating: 4.5,
     latitude: 4.0472249,
     longitude: 6.574601
+  },
+  {
+    id: 2,
+    name: "Idumota Parking",
+    image: BgB,
+    description: "A bustling place with lots of activities from people and businesses.",
+    price: 200,
+    rating: 4.5,
+    latitude: 6.305743748658554,
+    longitude: -351.8934631347657
   }
   // Add more parking lots as needed
 ];
@@ -41,6 +51,7 @@ const FindLot = () => {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         });
+        console.log(position);
       });
     } else {
       console.log("Geolocation is not available in your browser.");
